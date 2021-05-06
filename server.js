@@ -1,5 +1,6 @@
 import express from 'express';
 import dotenv from 'dotenv';
+import cors from 'cors';
 import morgan from 'morgan';
 import connectDB from './config/db.js';
 import setLogColors from './middleware/setLogColors.js';
@@ -16,8 +17,8 @@ import projectRoutes from './routes/projectRoutes.js';
 import userList from './routes/usersRoutes.js';
 import friendsRoutes from './routes/friendsRoutes.js';
 // import newLog from './routes/logRoutes.js';
-
 const app = express();
+app.use(cors());
 
 setLogColors();
 googleRoutes(app);
