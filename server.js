@@ -36,15 +36,15 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 // Mount routers
-app.use('/api/tickets', ticketRoutes);
-app.use('/api/comment', commentRoutes);
-app.use('/api/login', userRoutes);
-app.use('/api/register', registerRoutes);
-app.use('/api/profile', profileRoutes);
-app.use('/api/projects', projectRoutes);
-app.use('/api/project', singleProjectRoute);
-app.use('/api/users', userList);
-app.use('/api/friends', friendsRoutes);
+app.use('/tickets', ticketRoutes);
+app.use('/comment', commentRoutes);
+app.use('/login', userRoutes);
+app.use('/register', registerRoutes);
+app.use('/profile', profileRoutes);
+app.use('/projects', projectRoutes);
+app.use('/project', singleProjectRoute);
+app.use('/users', userList);
+app.use('/friends', friendsRoutes);
 // app.use('/api/logs', newLog);
 
 // app.use(express.static(path.join(__dirname, 'build')));
