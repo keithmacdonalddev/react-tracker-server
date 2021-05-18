@@ -1,5 +1,3 @@
-/** @format */
-
 import asyncHandler from 'express-async-handler';
 import User from '../models/userModel.js';
 import generateToken from '../utils/generateToken.js';
@@ -23,7 +21,8 @@ const authUser = asyncHandler(async (req, res) => {
 		console.log('Password correct');
 		res.json({
 			_id: user._id,
-			name: user.name,
+			firstName: user.firstName,
+			lastName: user.lastName,
 			email: user.email,
 			username: user.username,
 			idAdmin: user.isAdmin,
@@ -37,7 +36,7 @@ const authUser = asyncHandler(async (req, res) => {
 });
 
 const registerUser = asyncHandler(async (req, res, next) => {
-	const { name, username, email, password } = req.body;
+	const { firstName, lastName, username, email, password } = req.body;
 
 	const userExists = await User.findOne({ email });
 
@@ -46,12 +45,13 @@ const registerUser = asyncHandler(async (req, res, next) => {
 		throw new Error('User already exists');
 	}
 
-	const user = await User.create({ name, username, email, password });
+	const user = await User.create({ firstName, lastName, username, email, password });
 
 	if (user) {
 		res.status(201).json({
 			_id: user._id,
-			name: user.name,
+			firstName: user.firstName,
+			lastName: user.lastName,
 			username: user.username,
 			email: user.email,
 			idAdmin: user.isAdmin,
@@ -67,9 +67,7 @@ const registerUser = asyncHandler(async (req, res, next) => {
 // @route   GET /api/profile
 // @access  Private
 const getUserProfile = asyncHandler(async (req, res, next) => {
-	console.log(
-		`Searching for user profile with req.params.id: ${req.params.id}`,
-	);
+	console.log(`Searching for user profile with req.params.id: ${req.params.id}`);
 	const user = await User.findById(req.params.id);
 
 	if (user) {
@@ -77,7 +75,8 @@ const getUserProfile = asyncHandler(async (req, res, next) => {
 		res.json({
 			_id: user._id,
 			username: user.username,
-			name: user.name,
+			firstName: user.firstName,
+			lastName: user.lastName,
 			email: user.email,
 			role: user.role,
 			bio: user.bio,
@@ -104,7 +103,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 	if (user) {
 		console.log('Updating user data...');
 		console.log(`req body ${JSON.stringify(req.body)}`);
-		user.name = req.body.name || user.name;
+		user.firstName = req.body.firstName || user.firstName;
+		user.lastName = req.body.lastName || user.lastName;
 		user.email = req.body.email || user.email;
 		user.username = req.body.username || user.username;
 		user.bio = req.body.bio || user.bio;
@@ -120,7 +120,8 @@ const updateUserProfile = asyncHandler(async (req, res) => {
 		console.log(`update complete, sending data to client`);
 		res.json({
 			_id: updatedUser._id,
-			name: updatedUser.name,
+			firstName: updatedUser.firstName,
+			lastName: updatedUser.lastName,
 			email: updatedUser.email,
 			isAdmin: updatedUser.isAdmin,
 			token: generateToken(updatedUser._id),
