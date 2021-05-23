@@ -4,7 +4,6 @@ import asyncHandler from 'express-async-handler';
 import Project from '../models/projectModel.js';
 import User from '../models/userModel.js';
 
-
 export const newProject = asyncHandler(async (req, res) => {
 	console.log(`New project request reached API, unpacking request data...`);
 
@@ -16,7 +15,7 @@ export const newProject = asyncHandler(async (req, res) => {
 		title,
 		description,
 		status,
-		administrator: id,
+		owner: id,
 	});
 
 	if (project) {
@@ -34,7 +33,7 @@ export const newProject = asyncHandler(async (req, res) => {
 			});
 		});
 	}
-}
+});
 
 export const getProjects = async (req, res) => {
 	const projects = await Project.find({});
