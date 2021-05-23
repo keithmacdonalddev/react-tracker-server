@@ -23,6 +23,13 @@ const userSchema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
+
+		projects: [
+			{
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'User',
+			},
+		],
 		role: {
 			type: String,
 			required: true,

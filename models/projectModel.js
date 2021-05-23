@@ -18,7 +18,7 @@ const projectSchema = mongoose.Schema(
 		assignee: {
 			type: Array,
 		},
-		administrator: {
+		owner: {
 			type: mongoose.Schema.Types.ObjectId,
 			ref: 'User',
 		},

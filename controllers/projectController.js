@@ -2,22 +2,39 @@
 
 import asyncHandler from 'express-async-handler';
 import Project from '../models/projectModel.js';
+import User from '../models/userModel.js';
+
 
 export const newProject = asyncHandler(async (req, res) => {
-	const { title, description, status, id } = req.body;
+	console.log(`New project request reached API, unpacking request data...`);
 
+	const { title, description, status, id } = req.body;
+	console.log(`unpacking request data complete: (${title}, ${description}, ${status}, ${id}`);
+
+	console.log('Creating project...');
 	const project = await Project.create({
 		title,
 		description,
 		status,
 		administrator: id,
 	});
+
 	if (project) {
-		res.json({
-			project,
+		console.log(`New project created: ${project}`);
+		console.log(`Updating reference to project owner id: ${id}`);
+		console.log('Searching for user');
+		const user = await User.findById(id, function (err, user) {
+			if (user) {
+				console.log('User found, adding new project to users profile');
+				user.projects = [...user.projects, project._id];
+			}
+
+			res.json({
+				project,
+			});
 		});
 	}
-});
+}
 
 export const getProjects = async (req, res) => {
 	const projects = await Project.find({});
