@@ -1,5 +1,10 @@
+// middleware
 import asyncHandler from 'express-async-handler';
+
+// database models
 import User from '../models/userModel.js';
+
+// utilities
 import generateToken from '../utils/generateToken.js';
 
 // @desc Authorize user and get token
