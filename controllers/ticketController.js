@@ -8,6 +8,17 @@ export const getTickets = asyncHandler(async (req, res, next) => {
 	res.json(tickets);
 });
 
+export const getTicketsByOwnerId = asyncHandler(async (req, res, next) => {
+	const tickets = await Ticket.find({});
+
+	const ticketsByOwnerId = tickets.filter((ticket) => {
+		if (ticket.submittedBy === req.params.id) {
+			return ticket;
+		}
+	});
+	res.json(ticketsByOwnerId);
+});
+
 export const getTicketById = asyncHandler(async (req, res, next) => {
 	const ticket = await Ticket.findById(req.params.id);
 	res.json(ticket);
