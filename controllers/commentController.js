@@ -31,3 +31,14 @@ export const createComment = asyncHandler(async (req, res) => {
 		throw new Error('Ticket not found');
 	}
 });
+
+export const deleteComment = asyncHandler(async (req, res) => {
+	const { ticketId, commentId } = req.body;
+	console.log(`ticketId: ${ticketId}`);
+	console.log(`commentId: ${commentId}`);
+
+	const ticket = await Ticket.findByIdAndUpdate(ticketId, { $pull: { comments: { _id: commentId } } });
+
+	console.log(`ticket: ${ticket}`);
+	res.json({ ticket });
+});
