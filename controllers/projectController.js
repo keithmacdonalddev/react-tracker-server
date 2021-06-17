@@ -7,22 +7,22 @@ import User from '../models/userModel.js';
 export const newProject = asyncHandler(async (req, res) => {
 	console.log(`New project request reached API, unpacking request data...`);
 
-	const { title, description, status, id } = req.body;
-	console.log(`unpacking request data complete: (${title}, ${description}, ${status}, ${id}`);
+	const { title, description, status, owner } = req.body;
+	console.log(`unpacking request data complete: (${title}, ${description}, ${status}, ${owner}`);
 
 	console.log('Creating project...');
 	const project = await Project.create({
 		title,
 		description,
 		status,
-		owner: id,
+		owner: { id: owner._id, firstName: owner.firstName, lastName: owner.lastName },
 	});
 
 	if (project) {
 		console.log(`New project created: ${project}`);
-		console.log(`Updating reference to project owner id: ${id}`);
+		console.log(`Updating reference to project owner id: ${project.owner.id}`);
 		console.log('Searching for user');
-		const user = await User.findById(id, function (err, user) {
+		const user = await User.findById(project.owner.id, function (err, user) {
 			if (user) {
 				console.log('User found, adding new project to users profile');
 				user.projects = [...user.projects, project._id];
@@ -59,9 +59,13 @@ export const deleteProject = async (req, res) => {
 
 export const editProject = asyncHandler(async (req, res, next) => {
 	console.log(req.body);
+	const { assigneeId } = req.body;
 	console.log(`req.params ${req.params.id}`);
 	const project = await Project.findById(req.params.id);
 	if (project) {
+		if (req.body.assigneeId) {
+			project.assignee = [...project.assignee, assigneeId];
+		}
 		project.title = req.body.title || project.title;
 		project.description = req.body.description || project.description;
 		project.status = req.body.status || project.status;
@@ -71,6 +75,7 @@ export const editProject = asyncHandler(async (req, res, next) => {
 			title: updatedProject.title,
 			description: updatedProject.description,
 			status: updatedProject.status,
+			assignee: updatedProject.assignee,
 		});
 	} else {
 		res.status(404);

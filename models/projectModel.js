@@ -19,8 +19,12 @@ const projectSchema = mongoose.Schema(
 			type: Array,
 		},
 		owner: {
-			type: mongoose.Schema.Types.ObjectId,
-			ref: 'User',
+			id: { type: mongoose.Schema.Types.ObjectId },
+			firstName: { type: String },
+			lastName: { type: String },
+		},
+		tickets: {
+			type: Array,
 		},
 	},
 	{
