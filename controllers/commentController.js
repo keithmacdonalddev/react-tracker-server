@@ -6,19 +6,18 @@ import Ticket from '../models/ticketModel.js';
 // @route   PUT /api/profile
 // @access  Private
 export const createComment = asyncHandler(async (req, res) => {
-	console.log('from createComment');
-	const ticket = await Ticket.findById(req.params.id);
-	console.log(`ticket *********** ${JSON.stringify(ticket)} *************`);
 	const { newComment } = req.body;
 	const { userInfo } = newComment;
 	const { firstName, lastName } = userInfo;
 	const name = `${firstName} ${lastName}`;
 	const { comment } = newComment;
 
-	if (ticket) {
-		ticket.comments.push({ name, comment });
+	const addCommentToThisTicket = await Ticket.findById(req.params.id);
 
-		const updatedTicket = await ticket.save();
+	if (addCommentToThisTicket) {
+		addCommentToThisTicket.comments.push({ name, comment });
+
+		const updatedTicket = await addCommentToThisTicket.save();
 
 		console.log('update complete, sending data to client');
 		res.json({

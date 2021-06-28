@@ -16,7 +16,7 @@ import singleProjectRoute from './routes/singleProjectRoute.js';
 import projectRoutes from './routes/projectRoutes.js';
 import userList from './routes/usersRoutes.js';
 import friendsRoutes from './routes/friendsRoutes.js';
-// import newLog from './routes/logRoutes.js';
+import activityRoutes from './routes/activityRoutes.js';
 const app = express();
 app.use(cors());
 
@@ -46,7 +46,7 @@ app.use('/projects', projectRoutes);
 app.use('/project', singleProjectRoute);
 app.use('/users', userList);
 app.use('/friends', friendsRoutes);
-// app.use('/api/logs', newLog);
+app.use('/activity', activityRoutes);
 
 // app.use(express.static(path.join(__dirname, 'build')));
 

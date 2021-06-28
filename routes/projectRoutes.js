@@ -5,6 +5,6 @@ import { protect } from '../middleware/authMiddleware.js';
 const router = express.Router();
 
 router.route('/').post(protect, newProject);
-router.route('/').get(protect, getProjects);
+router.route('/:id').get(protect, getProjects);
 
 export default router;

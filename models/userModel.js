@@ -3,6 +3,16 @@
 import mongoose from 'mongoose';
 import bcrypt from 'bcryptjs';
 
+const activitySchema = mongoose.Schema(
+	{
+		event: { type: String, required: true },
+		details: { type: String, required: true },
+	},
+	{
+		timestamps: true,
+	},
+);
+
 const userSchema = mongoose.Schema(
 	{
 		googleId: {
@@ -54,6 +64,7 @@ const userSchema = mongoose.Schema(
 		bio: {
 			type: String,
 		},
+		activity: [activitySchema],
 	},
 	{
 		timestamps: true, // mongoose allows a second argument of options, 'timestamps' auto populates fields: 'created at' & 'updated at'

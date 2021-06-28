@@ -36,8 +36,15 @@ export const newProject = asyncHandler(async (req, res) => {
 });
 
 export const getProjects = async (req, res) => {
-	const projects = await Project.find({});
-	res.json(projects);
+	let currentUserProjects = [];
+	const allProjects = await Project.find({});
+	if (allProjects) {
+		allProjects.map((project) => {
+			JSON.stringify(project.owner.id) === JSON.stringify(req.params.id) && currentUserProjects.push(project);
+		});
+	}
+
+	res.json(currentUserProjects);
 };
 
 export const getProject = async (req, res) => {
