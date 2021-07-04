@@ -37,7 +37,6 @@ const ticketSchema = mongoose.Schema(
 		},
 		submittedBy: {
 			type: mongoose.Schema.Types.ObjectId,
-			// required: true,
 			ref: 'User', // ref: means 'reference' and will create a relationship from the 'User' document
 		},
 		project: {

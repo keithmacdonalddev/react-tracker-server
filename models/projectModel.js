@@ -1,7 +1,5 @@
 import mongoose from 'mongoose';
 
-console.log('accessing ticketModel.js file'.file);
-
 const projectSchema = mongoose.Schema(
 	{
 		title: {
@@ -19,9 +17,18 @@ const projectSchema = mongoose.Schema(
 			type: Array,
 		},
 		owner: {
-			id: { type: mongoose.Schema.Types.ObjectId },
-			firstName: { type: String },
-			lastName: { type: String },
+			id: {
+				type: mongoose.Schema.Types.ObjectId,
+				ref: 'User',
+			},
+			firstName: {
+				type: String,
+				ref: 'User',
+			},
+			lastName: {
+				type: String,
+				ref: 'User',
+			},
 		},
 		tickets: {
 			type: Array,
