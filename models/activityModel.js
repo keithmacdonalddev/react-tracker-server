@@ -13,6 +13,7 @@ const logSchema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		data: { type: {} },
 	},
 	{
 		timestamps: true, // mongoose allows a second argument of options, 'timestamps' auto populates fields: 'created at' & 'updated at'

@@ -1,45 +1,5 @@
-// middleware
 import asyncHandler from 'express-async-handler';
-
-// database models
 import User from '../models/userModel.js';
-
-// utilities
-import generateToken from '../utils/generateToken.js';
-
-// @desc Authorize user and get token
-// @route POST /login
-// @route /login
-const authUser = asyncHandler(async (req, res) => {
-	const { email, password } = req.body;
-
-	const user = await User.findOne({ email });
-
-	if (!user) {
-		res.status(401);
-		throw new Error('email not found');
-	} else {
-		console.log('Email found');
-	}
-
-	if (user && (await user.matchPassword(password))) {
-		console.log('Password correct');
-		res.json({
-			_id: user._id,
-			firstName: user.firstName,
-			lastName: user.lastName,
-			email: user.email,
-			username: user.username,
-			idAdmin: user.isAdmin,
-			loggedIn: true,
-			avatar: user.avatar,
-			token: generateToken(user._id),
-		});
-	} else {
-		res.status(401);
-		throw new Error('Invalid password');
-	}
-});
 
 const registerUser = asyncHandler(async (req, res, next) => {
 	const { firstName, lastName, username, email, password } = req.body;
@@ -155,4 +115,4 @@ const userList = asyncHandler(async (req, res, next) => {
 	}
 });
 
-export { userList, getUserProfile, registerUser, authUser, updateUserProfile };
+export { userList, getUserProfile, registerUser, updateUserProfile };
