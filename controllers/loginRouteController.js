@@ -16,6 +16,8 @@ export const authUser = asyncHandler(async (req, res) => {
 	}
 
 	if (user && (await user.matchPassword(password))) {
+		Log.create({ type: 'LoginAttempt', status: 'success', reason: '', data: { email: user.email } });
+
 		res.json({
 			_id: user._id,
 			firstName: user.firstName,
