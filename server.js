@@ -8,7 +8,7 @@ import setLogColors from './middleware/setLogColors.js';
 
 // Route files
 import userList from './routes/usersRoutes.js';
-import userRoutes from './routes/userRoutes.js';
+import loginRoute from './routes/loginRoute.js';
 import ticketRoutes from './routes/ticketRoutes.js';
 import commentRoutes from './routes/commentRoutes.js';
 import profileRoutes from './routes/profileRoutes.js';
@@ -31,7 +31,7 @@ process.env.NODE_ENV === 'development' && app.use(morgan('dev'));
 
 // Mount routers
 app.use('/users', userList);
-app.use('/login', userRoutes);
+app.use('/login', loginRoute);
 app.use('/tickets', ticketRoutes);
 app.use('/profile', profileRoutes);
 app.use('/comment', commentRoutes);
