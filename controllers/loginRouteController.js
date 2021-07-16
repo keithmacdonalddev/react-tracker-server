@@ -10,7 +10,7 @@ export const authUser = asyncHandler(async (req, res) => {
 	const user = await User.findOne({ email });
 
 	if (!user) {
-		Log.create({ logType: 'error', log: 'login attempt failed, email not found', data: { email: email } });
+		Log.create({ type: 'LoginAttempt', status: 'failed', reason: 'email not found', data: { email: email } });
 		res.status(401);
 		throw new Error('email not found');
 	}
@@ -28,6 +28,8 @@ export const authUser = asyncHandler(async (req, res) => {
 			token: generateToken(user._id),
 		});
 	} else {
+		Log.create({ type: 'LoginAttempt', status: 'failed', reason: 'invalid password', data: { email: email } });
+
 		res.status(401);
 		throw new Error('Invalid password');
 	}

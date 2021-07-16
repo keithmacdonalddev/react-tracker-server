@@ -5,11 +5,15 @@ const logSchema = mongoose.Schema(
 		user: {
 			type: String,
 		},
-		logType: {
+		type: {
 			type: String,
 			required: true,
 		},
-		log: {
+		status: {
+			type: String,
+			required: true,
+		},
+		reason: {
 			type: String,
 			required: true,
 		},
