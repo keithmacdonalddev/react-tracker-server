@@ -15,7 +15,6 @@ const logSchema = mongoose.Schema(
 		},
 		reason: {
 			type: String,
-			required: true,
 		},
 		data: { type: {} },
 	},
