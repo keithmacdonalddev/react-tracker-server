@@ -37,7 +37,7 @@ const projectSchema = mongoose.Schema(
 		manager: {
 			id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
 			firstName: { type: String, required: true, ref: 'User' },
-			LastName: { type: String, required: true, ref: 'User' },
+			lastName: { type: String, required: true, ref: 'User' },
 		},
 	},
 	{

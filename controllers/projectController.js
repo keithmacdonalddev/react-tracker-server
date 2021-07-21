@@ -7,22 +7,25 @@ import User from '../models/userModel.js';
 export const newProject = asyncHandler(async (req, res) => {
 	console.log(`New project request reached API, unpacking request data...`);
 
-	const { title, description, status, owner } = req.body;
-	console.log(`unpacking request data complete: (${title}, ${description}, ${status}, ${owner}`);
+	const { projectNumber, title, description, category, status, priority, userInfo } = req.body;
+	console.log(`unpacking request data complete: (${title}, ${description}, ${status}, ${userInfo}`);
 
 	console.log('Creating project...');
 	const project = await Project.create({
+		number: projectNumber,
 		title,
 		description,
+		category,
 		status,
-		owner: { id: owner._id, firstName: owner.firstName, lastName: owner.lastName },
+		priority,
+		manager: { id: userInfo._id, firstName: userInfo.firstName, lastName: userInfo.lastName },
 	});
 
 	if (project) {
 		console.log(`New project created: ${project}`);
-		console.log(`Updating reference to project owner id: ${project.owner.id}`);
+		console.log(`Updating reference to project owner id: ${project.manager.id}`);
 		console.log('Searching for user');
-		const user = await User.findById(project.owner.id, function (err, user) {
+		const user = await User.findById(project.manager.id, function (err, user) {
 			if (user) {
 				console.log('User found, adding new project to users profile');
 				user.projects = [...user.projects, project._id];
@@ -40,7 +43,8 @@ export const getProjects = async (req, res) => {
 	const allProjects = await Project.find({});
 	if (allProjects) {
 		allProjects.map((project) => {
-			JSON.stringify(project.owner._id) === JSON.stringify(req.params.id) && currentUserProjects.push(project);
+			console.log(project.manager);
+			JSON.stringify(project.manager.id) === JSON.stringify(req.params.id) && currentUserProjects.push(project);
 		});
 	}
 
