@@ -2,6 +2,10 @@ import mongoose from 'mongoose';
 
 const projectSchema = mongoose.Schema(
 	{
+		number: {
+			type: Number,
+			required: true,
+		},
 		title: {
 			type: String,
 			required: true,
@@ -10,28 +14,30 @@ const projectSchema = mongoose.Schema(
 			type: String,
 			required: true,
 		},
+		category: {
+			type: String,
+			required: true,
+		},
 		status: {
 			type: String,
+			required: true,
 		},
-		assignee: {
-			type: Array,
+		priority: {
+			type: String,
+			required: true,
 		},
-		owner: {
-			id: {
-				type: mongoose.Schema.Types.ObjectId,
-				ref: 'User',
+
+		members: [
+			{
+				id: { type: mongoose.Schema.Types.ObjectId, ref: User },
+				firstName: { type: String, ref: User },
+				LastName: { type: String, ref: User },
 			},
-			firstName: {
-				type: String,
-				ref: 'User',
-			},
-			lastName: {
-				type: String,
-				ref: 'User',
-			},
-		},
-		tickets: {
-			type: Array,
+		],
+		manager: {
+			id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: User },
+			firstName: { type: String, required: true, ref: User },
+			LastName: { type: String, required: true, ref: User },
 		},
 	},
 	{
