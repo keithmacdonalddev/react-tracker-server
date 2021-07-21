@@ -29,15 +29,15 @@ const projectSchema = mongoose.Schema(
 
 		members: [
 			{
-				id: { type: mongoose.Schema.Types.ObjectId, ref: User },
-				firstName: { type: String, ref: User },
-				LastName: { type: String, ref: User },
+				id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
+				firstName: { type: String, ref: 'User' },
+				LastName: { type: String, ref: 'User' },
 			},
 		],
 		manager: {
-			id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: User },
-			firstName: { type: String, required: true, ref: User },
-			LastName: { type: String, required: true, ref: User },
+			id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
+			firstName: { type: String, required: true, ref: 'User' },
+			LastName: { type: String, required: true, ref: 'User' },
 		},
 	},
 	{
