@@ -40,7 +40,7 @@ export const getProjects = async (req, res) => {
 	const allProjects = await Project.find({});
 	if (allProjects) {
 		allProjects.map((project) => {
-			JSON.stringify(project.owner.id) === JSON.stringify(req.params.id) && currentUserProjects.push(project);
+			JSON.stringify(project.owner._id) === JSON.stringify(req.params.id) && currentUserProjects.push(project);
 		});
 	}
 
