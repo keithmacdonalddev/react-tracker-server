@@ -6,6 +6,7 @@ import User from '../models/userModel.js';
 
 export const newProject = asyncHandler(async (req, res) => {
 	console.log(`New project request reached API, unpacking request data...`);
+	console.log(`testing for req.user ${req.user}`);
 
 	const { projectNumber, title, description, category, status, priority, userInfo } = req.body;
 	console.log(`unpacking request data complete: (${title}, ${description}, ${status}, ${userInfo}`);
