@@ -15,7 +15,7 @@ const projectSchema = mongoose.Schema(
 			required: true,
 		},
 		category: {
-			type: String,
+			type: Array,
 			required: true,
 		},
 		status: {
@@ -34,14 +34,15 @@ const projectSchema = mongoose.Schema(
 				LastName: { type: String, ref: 'User' },
 			},
 		],
-		manager: {
+		owner: {
 			id: { type: mongoose.Schema.Types.ObjectId, required: true, ref: 'User' },
 			firstName: { type: String, required: true, ref: 'User' },
 			lastName: { type: String, required: true, ref: 'User' },
 		},
 	},
 	{
-		timestamps: true, // mongoose allows a second argument of options, 'timestamps' auto populates fields: 'created at' & 'updated at'
+		// 'timestamps' auto populates fields: 'created at' & 'updated at'
+		timestamps: true, // mongoose allows a second argument of options,
 	},
 );
 
