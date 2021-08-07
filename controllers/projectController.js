@@ -34,7 +34,7 @@ export const newProject = asyncHandler(async (req, res) => {
 				res.status(404).json('User not found');
 			}
 
-			res.status(201).json({ project }, { message: 'New project created successfully' });
+			res.status(201).json({ project, message: 'New project created successfully' });
 		});
 	}
 });
